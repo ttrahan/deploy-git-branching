@@ -1,44 +1,64 @@
 resources:
-  - name: deploy-ecs-basic-image
+  - name: deploy-git-branching-image-develop
     type: image
     flags:
-      - deploy-ecs-basic
+      - deploy-git-branching
     integration: dr-ecr
     pointer:
-      sourceName: "679404489841.dkr.ecr.us-east-1.amazonaws.com/deploy-ecs-basic"
+      sourceName: "679404489841.dkr.ecr.us-east-1.amazonaws.com/deploy-git-branching"
     seed:
-      versionName: "latest"
+      versionName: "develop.1"
 
-  - name: deploy-ecs-basic-params
+  - name: deploy-git-branching-image-release
+    type: image
+    flags:
+      - deploy-git-branching
+    integration: dr-ecr
+    pointer:
+      sourceName: "679404489841.dkr.ecr.us-east-1.amazonaws.com/deploy-git-branching"
+    seed:
+      versionName: "release.1"
+
+  - name: deploy-git-branching-image-hotfix
+    type: image
+    flags:
+      - deploy-git-branching
+    integration: dr-ecr
+    pointer:
+      sourceName: "679404489841.dkr.ecr.us-east-1.amazonaws.com/deploy-git-branching"
+    seed:
+      versionName: "hotfix.1"
+
+  - name: deploy-git-branching-params
     type: params
     flags:
-      - deploy-ecs-basic
+      - deploy-git-branching
     version:
       params:
         PORT: 80
         ENVIRONMENT: "dev"
 
-  - name: deploy-ecs-basic-docker-options
+  - name: deploy-git-branching-docker-options
     type: dockerOptions
     flags:
-      - deploy-ecs-basic
+      - deploy-git-branching
     version:
       memory: 100
       portMappings:
         - 80:80
 
-  - name: deploy-ecs-basic-replicas
+  - name: deploy-git-branching-replicas
     type: replicas
     flags:
-      - deploy-ecs-basic
+      - deploy-git-branching
     version:
       count: 1
 
-  - name: deploy-ecs-basic-ecs-cluster
+  - name: deploy-git-branching-ecs-cluster-develop
     type: cluster
     flags:
-      - deploy-ecs-basic
+      - deploy-git-branching
     integration: dr-aws
     pointer:
-      sourceName : "deploy-ecs-basic" #name of the cluster to which we are deploying
+      sourceName : "deploy-git-branching" #name of the cluster to which we are deploying
       region: "us-east-1"

@@ -1,27 +1,29 @@
 jobs:
-  # - name: deploy-ecs-basic_runCI
-  #   type: runCI
-  #   flags:
-  #     - deploy-ecs-basic
-  #   steps:
-  #     - OUT: deploy-ecs-basic-image
+  - name: deploy-git-branching_runCI
+    type: runCI
+    flags:
+      - deploy-git-branching
+    steps:
+      - OUT: deploy-git-branching-image-develop
+      - OUT: deploy-git-branching-image-release
+      - OUT: deploy-git-branching-image-hotfix
 
-  - name: deploy-ecs-basic-manifest
+  - name: deploy-git-branching-manifest-develop
     type: manifest
     flags:
-      - deploy-ecs-basic
+      - deploy-git-branching
     steps:
-     - IN: deploy-ecs-basic-image
-     - IN: deploy-ecs-basic-docker-options
-     - IN: deploy-ecs-basic-params
-     - IN: deploy-ecs-basic-replicas
+     - IN: deploy-git-branching-image-develop
+     - IN: deploy-git-branching-docker-options
+     - IN: deploy-git-branching-params
+     - IN: deploy-git-branching-replicas
 
-  - name: deploy-ecs-basic-deploy
+  - name: deploy-git-branching-deploy-develop
     type: deploy
     flags:
-      - deploy-ecs-basic
+      - deploy-git-branching
     steps:
-      - IN: deploy-ecs-basic-manifest
-      - IN: deploy-ecs-basic-ecs-cluster
+      - IN: deploy-git-branching-manifest-develop
+      - IN: deploy-git-branching-ecs-cluster-develop
       - TASK: managed
         deployMethod: replace
