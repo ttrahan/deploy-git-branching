@@ -3,7 +3,7 @@ resources:
     type: image
     flags:
       - deploy-git-branching
-    integration: dr-ecr
+    integration: ttrahan-ecr
     pointer:
       sourceName: "679404489841.dkr.ecr.us-east-1.amazonaws.com/deploy-git-branching"
     seed:
@@ -13,7 +13,7 @@ resources:
     type: image
     flags:
       - deploy-git-branching
-    integration: dr-ecr
+    integration: ttrahan-ecr
     pointer:
       sourceName: "679404489841.dkr.ecr.us-east-1.amazonaws.com/deploy-git-branching"
     seed:
@@ -23,7 +23,7 @@ resources:
     type: image
     flags:
       - deploy-git-branching
-    integration: dr-ecr
+    integration: ttrahan-ecr
     pointer:
       sourceName: "679404489841.dkr.ecr.us-east-1.amazonaws.com/deploy-git-branching"
     seed:
@@ -58,7 +58,7 @@ resources:
     type: cluster
     flags:
       - deploy-git-branching
-    integration: dr-aws
+    integration: ttrahan-aws
     pointer:
       sourceName : "deploy-git-branching" #name of the cluster to which we are deploying
       region: "us-east-1"
