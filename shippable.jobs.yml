@@ -35,7 +35,18 @@ jobs:
       - IN: deploy-git-branching-replicas
       - TASK: managed
         deployMethod: replace
-  
+ 
+  - name: deploy-git-branching-merge-develop
+    type: runCLI
+    flags:
+      - deploy-git-branching
+    steps:
+      - IN: deploy-git-branching-deploy-release
+      - IN: deploy-git-branching-repo
+      - TASK:
+        - script: git checkout develop
+        - script: git merge --no-ff release
+
   - name: deploy-git-branching-deploy-hotfix
     type: deploy
     flags:
