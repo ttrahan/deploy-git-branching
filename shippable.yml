@@ -35,11 +35,15 @@ build:
   # http://docs.shippable.com/ci/shippableyml/#post_ci
   on_success:
     - |
-        case "$BRANCH" in develop|release|hotfix
-          docker build -t $ECR_REPO:$BRANCH.$BUILD_NUMBER .
-          docker push $ECR_REPO:$BRANCH.$BUILD_NUMBER 
-          echo "versionName=$BRANCH.$BUILD_NUMBER" > $JOB_STATE/deploy-git-branching-image-$BRANCH.env 
-        ;;
+        case "$BRANCH" in 
+          develop|release|hotfix )
+            docker build -t $ECR_REPO:$BRANCH.$BUILD_NUMBER .
+            docker push $ECR_REPO:$BRANCH.$BUILD_NUMBER 
+            echo "versionName=$BRANCH.$BUILD_NUMBER" > $JOB_STATE/deploy-git-branching-image-$BRANCH.env 
+            ;;
+          * )
+            echo -e "No new image built\n"
+        esac
 
 # Integrations are used to connect external resources to CI
 # http://docs.shippable.com/integrations/overview/
