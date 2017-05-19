@@ -7,6 +7,7 @@ jobs:
       - OUT: deploy-git-branching-image-develop
       - OUT: deploy-git-branching-image-release
       - OUT: deploy-git-branching-image-hotfix
+      - OUT: deploy-git-branching-image-production
 
   - name: deploy-git-branching-deploy-develop
     type: deploy
