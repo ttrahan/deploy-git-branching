@@ -28,6 +28,7 @@ jobs:
       - deploy-git-branching
     steps:
       - IN: deploy-git-branching-deploy-develop
+        switch: off
       - IN: deploy-git-branching-image-release
       - IN: deploy-git-branching-ecs-cluster-release
       - IN: deploy-git-branching-docker-options
@@ -53,6 +54,7 @@ jobs:
       - deploy-git-branching
     steps:
       - IN: deploy-git-branching-deploy-release
+        switch: off
       - IN: deploy-git-branching-image-hotfix
       - IN: deploy-git-branching-ecs-cluster-hotfix
       - IN: deploy-git-branching-docker-options
@@ -67,6 +69,7 @@ jobs:
       - deploy-git-branching
     steps:
       - IN: deploy-git-branching-deploy-hotfix
+        switch: off
       - IN: deploy-git-branching-image-production
       - IN: deploy-git-branching-ecs-cluster-production
       - IN: deploy-git-branching-docker-options
