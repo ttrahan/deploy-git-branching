@@ -29,6 +29,16 @@ resources:
     seed:
       versionName: "hotfix.1"
 
+  - name: deploy-git-branching-image-production
+    type: image
+    flags:
+      - deploy-git-branching
+    integration: ttrahan-ecr
+    pointer:
+      sourceName: "679404489841.dkr.ecr.us-east-1.amazonaws.com/deploy-git-branching"
+    seed:
+      versionName: "production.1"
+
   - name: deploy-git-branching-params
     type: params
     flags:
@@ -70,4 +80,22 @@ resources:
     integration: ttrahan-aws
     pointer:
       sourceName : "deploy-git-branching-release" #name of the cluster to which we are deploying
+      region: "us-east-1"
+  
+  - name: deploy-git-branching-ecs-cluster-hotfix
+    type: cluster
+    flags:
+      - deploy-git-branching
+    integration: ttrahan-aws
+    pointer:
+      sourceName : "deploy-git-branching-hotfix" #name of the cluster to which we are deploying
+      region: "us-east-1"
+  
+  - name: deploy-git-branching-ecs-cluster-production
+    type: cluster
+    flags:
+      - deploy-git-branching
+    integration: ttrahan-aws
+    pointer:
+      sourceName : "deploy-git-branching-production" #name of the cluster to which we are deploying
       region: "us-east-1"

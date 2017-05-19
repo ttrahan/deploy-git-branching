@@ -33,3 +33,29 @@ jobs:
       - IN: deploy-git-branching-replicas
       - TASK: managed
         deployMethod: replace
+  
+  - name: deploy-git-branching-deploy-hotfix
+    type: deploy
+    flags:
+      - deploy-git-branching
+    steps:
+      - IN: deploy-git-branching-image-hotfix
+      - IN: deploy-git-branching-ecs-cluster-hotfix
+      - IN: deploy-git-branching-docker-options
+      - IN: deploy-git-branching-params
+      - IN: deploy-git-branching-replicas
+      - TASK: managed
+        deployMethod: replace
+
+  - name: deploy-git-branching-deploy-production
+    type: deploy
+    flags:
+      - deploy-git-branching
+    steps:
+      - IN: deploy-git-branching-image-production
+      - IN: deploy-git-branching-ecs-cluster-production
+      - IN: deploy-git-branching-docker-options
+      - IN: deploy-git-branching-params
+      - IN: deploy-git-branching-replicas
+      - TASK: managed
+        deployMethod: replace
