@@ -44,7 +44,9 @@ jobs:
     steps:
       - IN: deploy-git-branching-deploy-release
       - IN: deploy-git-branching-repo
+        switch: off
       - TASK:
+        - script: cd $DEPLOYGITBRANCHINGREPO_STATE
         - script: git checkout develop
         - script: git merge --no-ff release
 
