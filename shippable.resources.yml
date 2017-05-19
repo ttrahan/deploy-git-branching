@@ -1,4 +1,12 @@
 resources:
+  - name: deploy-git-branching-repo
+    type: gitRepo
+    flags:
+      - deploy-git-branching
+    integration: ttrahan-gh
+    pointer:
+      sourceName: "ttrahan/deploy-git-branching"
+
   - name: deploy-git-branching-image-develop
     type: image
     flags:
