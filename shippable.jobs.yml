@@ -8,22 +8,29 @@ jobs:
       - OUT: deploy-git-branching-image-release
       - OUT: deploy-git-branching-image-hotfix
 
-  - name: deploy-git-branching-manifest-develop
-    type: manifest
-    flags:
-      - deploy-git-branching
-    steps:
-     - IN: deploy-git-branching-image-develop
-     - IN: deploy-git-branching-docker-options
-     - IN: deploy-git-branching-params
-     - IN: deploy-git-branching-replicas
-
   - name: deploy-git-branching-deploy-develop
     type: deploy
     flags:
       - deploy-git-branching
     steps:
-      - IN: deploy-git-branching-manifest-develop
+      - IN: deploy-git-branching-image-develop
       - IN: deploy-git-branching-ecs-cluster-develop
+      - IN: deploy-git-branching-docker-options
+      - IN: deploy-git-branching-params
+      - IN: deploy-git-branching-replicas
+      - TASK: managed
+        deployMethod: replace
+  
+  - name: deploy-git-branching-deploy-release
+    type: deploy
+    flags:
+      - deploy-git-branching
+    steps:
+      - IN: deploy-git-branching-deploy-develop
+      - IN: deploy-git-branching-image-release
+      - IN: deploy-git-branching-ecs-cluster-release
+      - IN: deploy-git-branching-docker-options
+      - IN: deploy-git-branching-params
+      - IN: deploy-git-branching-replicas
       - TASK: managed
         deployMethod: replace

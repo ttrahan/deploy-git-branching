@@ -60,5 +60,14 @@ resources:
       - deploy-git-branching
     integration: ttrahan-aws
     pointer:
-      sourceName : "deploy-git-branching" #name of the cluster to which we are deploying
+      sourceName : "deploy-git-branching-develop" #name of the cluster to which we are deploying
+      region: "us-east-1"
+  
+  - name: deploy-git-branching-ecs-cluster-release
+    type: cluster
+    flags:
+      - deploy-git-branching
+    integration: ttrahan-aws
+    pointer:
+      sourceName : "deploy-git-branching-release" #name of the cluster to which we are deploying
       region: "us-east-1"
