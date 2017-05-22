@@ -37,7 +37,7 @@ jobs:
       - TASK: managed
         deployMethod: replace
  
-  - name: deploy-git-branching-merge-develop
+  - name: deploy-git-branching-merge-release-to-develop
     type: runCLI
     flags:
       - deploy-git-branching
@@ -48,9 +48,11 @@ jobs:
       - TASK:
         - script: cd $DEPLOYGITBRANCHINGREPO_STATE
         - script: git branch -a
-        - script: git fetch origin develop
-        - script: git checkout develop
-        - script: git merge --no-ff release
+        - script: git checkout --track origin/develop
+        - script: git pull --no-ff release
+        - script: git add .
+        - script: git commit -m 'merge release branch into develop branch'
+        - script: git push origin develop
 
   - name: deploy-git-branching-deploy-hotfix
     type: deploy
