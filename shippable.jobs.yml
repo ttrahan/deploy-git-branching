@@ -7,6 +7,7 @@ jobs:
       - OUT: deploy-git-branching-image-develop
       - OUT: deploy-git-branching-image-release
       - OUT: deploy-git-branching-image-hotfix
+      - OUT: deploy-git-branching-image-production
 
   - name: deploy-git-branching-deploy-develop
     type: deploy
@@ -26,9 +27,72 @@ jobs:
     flags:
       - deploy-git-branching
     steps:
-      - IN: deploy-git-branching-deploy-develop
       - IN: deploy-git-branching-image-release
       - IN: deploy-git-branching-ecs-cluster-release
+      - IN: deploy-git-branching-docker-options
+      - IN: deploy-git-branching-params
+      - IN: deploy-git-branching-replicas
+      - TASK: managed
+        deployMethod: replace
+ 
+  - name: deploy-git-branching-PR-release-to-develop
+    type: runCLI
+    flags:
+      - deploy-git-branching
+    steps:
+      - IN: deploy-git-branching-deploy-release
+      - IN: deploy-git-branching-repo
+        switch: off
+      - TASK:
+        - script: cd $DEPLOYGITBRANCHINGREPO_STATE
+        - script: git branch -a
+        - script: git checkout --track origin/develop
+        - script: git pull --no-ff release
+        - script: git add .
+        - script: git commit -m 'merge release branch into develop branch'
+        - script: git push origin develop
+
+  - name: deploy-git-branching-PR-release-to-master
+    type: runCLI
+    flags:
+      - deploy-git-branching
+    steps:
+      - IN: deploy-git-branching-deploy-release
+      - IN: deploy-git-branching-repo
+        switch: off
+      - TASK:
+        - script: cd $DEPLOYGITBRANCHINGREPO_STATE
+        - script: git branch -a
+        - script: git checkout --track origin/develop
+        - script: git pull --no-ff release
+        - script: git add .
+        - script: git commit -m 'merge release branch into develop branch'
+        - script: git push origin develop
+
+  - name: deploy-git-branching-deploy-hotfix
+    type: deploy
+    flags:
+      - deploy-git-branching
+    steps:
+      - IN: deploy-git-branching-deploy-release
+        switch: off
+      - IN: deploy-git-branching-image-hotfix
+      - IN: deploy-git-branching-ecs-cluster-hotfix
+      - IN: deploy-git-branching-docker-options
+      - IN: deploy-git-branching-params
+      - IN: deploy-git-branching-replicas
+      - TASK: managed
+        deployMethod: replace
+
+  - name: deploy-git-branching-deploy-production
+    type: deploy
+    flags:
+      - deploy-git-branching
+    steps:
+      - IN: deploy-git-branching-deploy-hotfix
+        switch: off
+      - IN: deploy-git-branching-image-production
+      - IN: deploy-git-branching-ecs-cluster-production
       - IN: deploy-git-branching-docker-options
       - IN: deploy-git-branching-params
       - IN: deploy-git-branching-replicas
