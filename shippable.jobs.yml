@@ -69,6 +69,7 @@ jobs:
         - script: git commit -m 'merge release branch into develop branch'
         - script: git push origin develop
 
+# TEST comment to test PR from release-to-develop
   - name: deploy-git-branching-deploy-hotfix
     type: deploy
     flags:
